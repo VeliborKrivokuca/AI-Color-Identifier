@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="//unpkg.com/brain.js"></script>
+    
+</head>
+<body>
+    <div class="text-container">
+        <h1 id="header">Pick a color:</h1>
+        <input value="2CAFFE" data-jscolor="">
+        <p id ="text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident nemo illum nam, aspernatur dignissimos assumenda quisquam quas iure consequatur! Eum animi error voluptate velit quos nemo modi, ipsa dolorem explicabo!
+        Molestias accusantium hic tempore illo voluptas atque, eum, neque repellendus et velit tenetur, fugiat aspernatur blanditiis consectetur quos nobis mollitia veniam ducimus voluptate iste ex incidunt. Veritatis dolore ipsam blanditiis?
+        Ab architecto aliquam, itaque unde sequi mollitia nam ratione ipsam nobis, facilis tenetur! Nihil minus officiis cupiditate voluptas fugit officia. Officia, velit? Ducimus eaque reiciendis suscipit voluptas sapiente, officia sint.</p>
+    </div>
+
+    <script>
+        // Transform hex to RGB
+        function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+                r: Math.round(parseInt(result[1], 16) / 2.55) / 100,
+                g: Math.round(parseInt(result[2], 16) / 2.55) / 100,
+                b: Math.round(parseInt(result[3], 16) / 2.55) / 100
+            } : null;
+        }
+
+        //Defining the neural network
+
+        const network = new brain.NeuralNetwork()
+
+        // Training the neural network
+        network.train([
+            {input: {r: 1, g: 1, b: 0}, output: {dark: 1} },
+            {input: {r: 1, g: 0, b: 0}, output: {dark: 1} },
+            {input: {r: 1, g: 0.27, b: 0.90}, output: {dark: 1} },
+            {input: {r: 0, g: 1, b: 1}, output: {dark: 1} },
+            {input: {r: 0, g: 0, b: 0}, output: {light: 1} },
+            {input: {r: 0.58, g: 0.6, b: 0.09}, output: {dark: 1} },
+            {input: {r: 0.41, g: 0.43, b: 0}, output: {light: 1} },
+            {input: {r: 0.65, g: 0, b: 0}, output: {light: 1} },
+            {input: {r: 0, g: 1, b: 0}, output: {dark: 1} },
+            {input: {r: 0.1, g: 0.84, b: 0.72}, output: {light: 1} },
+            {input: {r: 0.23, g: 0.09, b: 0}, output: {light: 1} },
+        ])
+
+        // Select input and text
+        const input = document.querySelector("input");
+        const text = document.querySelector("#text");
+        const header = document.querySelector("#header");
+
+        // Change background and color depending on the selection
+        input.addEventListener("change", (e) => {
+            const rgb = hexToRgb(e.target.value);
+            
+            text.style.background = e.target.value;
+            header.style.color = e.target.value;
+
+            const result = brain.likely(rgb, network);
+            console.log(result);
+            function odredi(ha) {
+                if (ha ==="dark") {
+                    return "black";
+                } else {
+                    return "white";
+                }
+            }
+            text.style.color = odredi(result);
+        })
+        
+
+    </script>
+    <script src="jscolor.js"></script>
+
+</body>
+</html>

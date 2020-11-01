@@ -1,0 +1,37 @@
+@font-face {
+    font-family: poppins;
+    src: url(font/Poppins/Poppins-Regular.ttf);
+}
+
+body {
+    background-color: rgb(202, 237, 255);
+    margin: 0 auto;
+    font-family: poppins;
+}
+
+.text-container {
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 10px;
+    width: 50%;
+    height: 350px;
+    background-color: rgb(202, 237, 255);
+}
+
+.text-container input {
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;;
+}
+
+.text-container p{
+    box-sizing: border-box;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 20px;
+}
